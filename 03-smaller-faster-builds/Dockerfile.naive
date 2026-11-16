@@ -1,0 +1,9 @@
+FROM golang:1.27.4-alpine
+ENV GOMAXPROCS=2
+WORKDIR /src
+COPY . .
+RUN go mod download
+RUN go test ./... && CGO_ENABLED=0 go build -o /server .
+USER 1000:1000
+EXPOSE 8080
+CMD ["/server"]

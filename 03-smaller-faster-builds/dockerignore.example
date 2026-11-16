@@ -1,0 +1,6 @@
+.git
+*.log
+*.dump
+Dockerfile*
+README.md
+dockerignore.example
