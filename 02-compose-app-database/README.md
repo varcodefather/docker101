@@ -97,6 +97,24 @@ docker compose ps
 
 Reload the browser. Both notes remain; the app container identity changes. Replacing a container leaves its named volume available. This is persistence, not a backup.
 
+## Change a published port: restart versus up
+
+In `.env`, change `APP_PORT=8080` to `APP_PORT=8082` using Neovim. Save and quit, then run:
+
+```bash
+docker compose restart web
+docker compose port web 8000
+```
+
+The published address remains `127.0.0.1:8080`. Restart uses the existing container's configuration. Apply the new mapping by reconciling the Compose configuration:
+
+```bash
+docker compose up -d --wait --wait-timeout 120
+docker compose port web 8000
+```
+
+Now expect `127.0.0.1:8082`. Open that browser address and check both saved notes. No image rebuild is needed for this host port change. Set `APP_PORT=8080` again, run `up` again and verify the port and original browser address before continuing.
+
 ## Diagnose the wrong database hostname
 
 ```bash
