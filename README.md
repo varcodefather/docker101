@@ -7,6 +7,7 @@ Practical Docker tutorials, from first container to a working local development 
 | 01 — First containers, nginx, storage, Dockerfile and Compose | [Watch — 21 minutes](https://www.youtube.com/watch?v=g_j--TxlTlI) | [Walkthrough and files](01-first-containers/) |
 | 02 — Compose: app, database, backup and restore | Video in production | [Walkthrough and files](02-compose-app-database/) |
 | 03 — Smaller images and build caching | Video in production | [Walkthrough and files](03-smaller-faster-builds/) |
+| 04 — Container state, ports, mounts and settings | Video in production | [Walkthrough and files](04-debug-containers/) |
 | 05 — Build and check an image in GitHub Actions | Video in production | [Walkthrough and files](05-ci-image-build/) |
 
 ## Follow along
