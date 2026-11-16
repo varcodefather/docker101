@@ -1,0 +1,35 @@
+services:
+  web:
+    build: .
+    image: compose-notes:v1
+    ports:
+      - "127.0.0.1:${APP_PORT:-8080}:8000"
+    environment:
+      PGHOST: db
+      PGDATABASE: notes
+      PGUSER: demo
+      PGPASSWORD: ${DB_PASSWORD:?copy .env.example to .env first}
+    depends_on:
+      db:
+        condition: service_healthy
+    mem_limit: 256m
+    cpus: 0.5
+  db:
+    image: postgres:17.12-alpine
+    environment:
+      POSTGRES_DB: notes
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?copy .env.example to .env first}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/01-notes.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+      start_period: 5s
+    mem_limit: 512m
+    cpus: 1.0
+volumes:
+  db-data:

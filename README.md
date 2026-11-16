@@ -5,6 +5,7 @@ Practical Docker tutorials, from first container to a working local development 
 | Tutorial | Video | Demo files |
 | --- | --- | --- |
 | 01 — First containers, nginx, storage, Dockerfile and Compose | [Watch — 21 minutes](https://www.youtube.com/watch?v=g_j--TxlTlI) | [Walkthrough and files](01-first-containers/) |
+| 02 — Compose: app, database, backup and restore | Video in production | [Walkthrough and files](02-compose-app-database/) |
 
 ## Follow along
 
