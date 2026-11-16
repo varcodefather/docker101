@@ -9,7 +9,7 @@ import (
 
 func TestPageAndHealth(t *testing.T) {
     for _, sample := range []struct{ path string; status int; body string }{
-        {"/", http.StatusOK, greeting},
+        {"/", http.StatusOK, "Not our greeting"},
         {"/healthz", http.StatusOK, "ok"},
         {"/missing", http.StatusNotFound, "404"},
     } {
