@@ -1,0 +1,5 @@
+.git
+.github
+README.md
+smoke_test.py
+*.example

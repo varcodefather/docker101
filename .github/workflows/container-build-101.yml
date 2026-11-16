@@ -1,0 +1,44 @@
+name: Container build 101
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "05-ci-image-build/**"
+      - ".github/workflows/container-build-101.yml"
+  pull_request:
+    paths:
+      - "05-ci-image-build/**"
+      - ".github/workflows/container-build-101.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        shell: bash
+        working-directory: 05-ci-image-build
+    steps:
+      - name: Check out triggering commit
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Test and build image
+        run: docker build --progress=plain --tag ci-demo:check .
+
+      - name: Start and check real app
+        run: |
+          docker run -d --name ci-demo --memory 128m --cpus 0.5 -p 127.0.0.1:18080:8080 ci-demo:check
+          python3 smoke_test.py http://127.0.0.1:18080
+
+      - name: Show app logs and remove demo container
+        if: always()
+        run: |
+          docker logs ci-demo 2>/dev/null || true
+          docker rm -f ci-demo 2>/dev/null || true
